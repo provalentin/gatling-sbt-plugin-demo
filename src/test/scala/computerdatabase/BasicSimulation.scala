@@ -7,7 +7,9 @@ import scala.concurrent.duration._
 class BasicSimulation extends Simulation {
 
   val httpProtocol = http
-    .baseUrl("http://computer-database.gatling.io") // Here is the root for all relative URLs
+    //.baseUrl("http://localhost:9000")
+    //.baseUrl("http://computer-database.gatling.io")
+    .baseUrl("http://3.18.109.35:9000") // Here is the root for all relative URLs
     .acceptHeader("text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8") // Here are the common headers
     .acceptEncodingHeader("gzip, deflate")
     .acceptLanguageHeader("en-US,en;q=0.5")
@@ -45,8 +47,8 @@ class BasicSimulation extends Simulation {
       .post("/computers")
       .formParam("""name""", """Beautiful Computer""") // Note the triple double quotes: used in Scala for protecting a whole chain of characters (no need for backslash)
       .formParam("""introduced""", """2012-05-30""")
-      .formParam("""discontinued""", """""")
-      .formParam("""company""", """37"""))
+      .formParam("""discontinued""", """2019-05-30""")
+      .formParam("""company""", """"""))
 
   setUp(scn.inject(atOnceUsers(1)).protocols(httpProtocol))
 }

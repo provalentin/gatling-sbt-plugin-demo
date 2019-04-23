@@ -10,7 +10,9 @@ import io.gatling.http.Predef._
 class ComputerWorld extends Simulation {
 
   val httpProtocol = http
-    .baseUrl("http://computer-database.gatling.io")
+    //.baseUrl("http://localhost:9000")
+    //.baseUrl("http://computer-database.gatling.io")
+    .baseUrl("http://ec2-3-16-40-197.us-east-2.compute.amazonaws.com:9000")
     .acceptHeader("""text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8""")
     .acceptEncodingHeader("""gzip, deflate""")
     .acceptLanguageHeader("""en-gb,en;q=0.5""")
@@ -38,6 +40,6 @@ class ComputerWorld extends Simulation {
       .check(substring("${homeComputer}")))
 
   setUp(computerDbScn.inject(
-    constantUsersPerSec(2) during(1 minute)
+    rampUsersPerSec(10) to 10 during(100 minute)
   ).protocols(httpProtocol)) 
 }
